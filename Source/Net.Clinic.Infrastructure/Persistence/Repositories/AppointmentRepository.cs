@@ -30,6 +30,12 @@ namespace Net.Clinic.Infrastructure.Persistence.Repositories
             return appointments;
         }
 
+        public async Task<Appointment> FetchAppointmentByIdAsync(int appointmentId, CancellationToken cancellationToken)
+        {
+            Appointment appointment = await this._context.Appointments.SingleAsync(e => e.Id == appointmentId, cancellationToken);
+            return appointment;
+        }
+        
         public void RemoveAppointment(Appointment appointment)
         {
             this._context.Appointments.Remove(appointment);
