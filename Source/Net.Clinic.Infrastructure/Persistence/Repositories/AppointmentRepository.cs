@@ -22,20 +22,22 @@ namespace Net.Clinic.Infrastructure.Persistence.Repositories
             return result.Entity;
         }
 
-        public async Task<ICollection<Appointment>> FetchAppointmentFromCurrentDateAsync(DateTime currentDate, CancellationToken cancellationToken)
+        public async Task<ICollection<Appointment>> FetchAppointmentsFromCurrentDateAsync(DateTime currentDate, CancellationToken cancellationToken)
         {
             ICollection<Appointment> appointments = await this._context.Appointments
-            .Where(a => a.DateSelected.Equals(currentDate)).ToListAsync(cancellationToken);
+            .Where(a => a.DateSelected.Day == currentDate.Day &&
+                a.DateSelected.Month == currentDate.Month &&
+                a.DateSelected.Year == currentDate.Year).ToListAsync(cancellationToken);
 
             return appointments;
         }
 
-        public async Task<Appointment> FetchAppointmentByIdAsync(int appointmentId, CancellationToken cancellationToken)
+        public async Task<Appointment?> FetchAppointmentByIdAsync(int appointmentId, CancellationToken cancellationToken)
         {
-            Appointment appointment = await this._context.Appointments.SingleAsync(e => e.Id == appointmentId, cancellationToken);
+            Appointment? appointment = await this._context.Appointments.SingleOrDefaultAsync(e => e.Id == appointmentId, cancellationToken);
             return appointment;
         }
-        
+
         public void RemoveAppointment(Appointment appointment)
         {
             this._context.Appointments.Remove(appointment);

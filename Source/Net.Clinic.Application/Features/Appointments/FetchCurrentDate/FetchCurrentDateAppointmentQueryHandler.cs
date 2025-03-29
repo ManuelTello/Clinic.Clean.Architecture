@@ -16,7 +16,7 @@ namespace Net.Clinic.Application.Features.Appointments.FetchCurrentDate
 
         public async Task<ApplicationResult<ICollection<FetchCurrentDateAppointmentQueryResponse>>> Handle(FetchCurrentDateAppointmentQuery request, CancellationToken cancellationToken)
         {
-            var repoOut = await this._repository.FetchAppointmentFromCurrentDateAsync(request.CurrentDate, cancellationToken);
+            var repoOut = await this._repository.FetchAppointmentsFromCurrentDateAsync(request.CurrentDate, cancellationToken);
             var appointments = new List<FetchCurrentDateAppointmentQueryResponse>();
 
             foreach (Appointment appointment in repoOut)
