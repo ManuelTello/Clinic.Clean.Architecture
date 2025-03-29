@@ -6,9 +6,9 @@ namespace Net.Clinic.Domain.IRepositories
     {
         public Task<Appointment> CreateAppointmentAsync(Appointment appointment, CancellationToken cancellationToken);
 
-        public Task<ICollection<Appointment>> FetchAppointmentFromCurrentDateAsync(DateTime currentDate, CancellationToken cancellationToken);
-        
-        public Task<Appointment> FetchAppointmentByIdAsync(int appointmentId, CancellationToken cancellationToken);
+        public Task<ICollection<Appointment>> FetchAppointmentsFromCurrentDateAsync(DateTime currentDate, CancellationToken cancellationToken);
+
+        public Task<Appointment?> FetchAppointmentByIdAsync(int appointmentId, CancellationToken cancellationToken);
 
         public Task UpdateAppointmentAssistAsync(int appointmentId, CancellationToken cancellationToken);
 
