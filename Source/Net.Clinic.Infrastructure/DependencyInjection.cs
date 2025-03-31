@@ -20,6 +20,7 @@ namespace Net.Clinic.Infrastructure
             var connectionString = configuration.GetConnectionString("PostgresConnection") ?? throw new ArgumentException();
 
             services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<IdentityContext>(options => options.UseNpgsql(connectionString));
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
             return services;
