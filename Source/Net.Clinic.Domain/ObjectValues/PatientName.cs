@@ -1,3 +1,5 @@
+using System.Formats.Asn1;
+using System.Text.RegularExpressions;
 using Net.Clinic.Domain.DomainResult;
 
 namespace Net.Clinic.Domain.ObjectValues
@@ -13,7 +15,25 @@ namespace Net.Clinic.Domain.ObjectValues
 
         public static DomainResult<PatientName> Create(string value)
         {
-            return DomainResult<PatientName>.Ok(new PatientName(value));
+            ICollection<string> errors = new List<string>();
+
+            if (string.IsNullOrEmpty(value))
+            {
+                errors.Add("Required field");
+            }
+            else if (!Validate().Match(value).Success)
+            {
+                errors.Add("Must be a valid name");
+            }
+            else
+            {
+                return DomainResult<PatientName>.Ok(new PatientName(value));
+            }
+
+            return DomainResult<PatientName>.Fail(errors);
         }
+
+        [GeneratedRegex($"")]
+        public static partial Regex Validate();
     }
 }
