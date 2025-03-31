@@ -9,7 +9,7 @@ using Net.Clinic.Application.Features.Appointments.UpdateAssist;
 namespace Net.Clinic.API.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("/api/appointments")]
     public class AppointmentsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,6 +20,7 @@ namespace Net.Clinic.API.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
         public async Task<IActionResult> CreateaAppointment([FromBody] CreateAppoinrtmentContract contract)
         {
             var command = new CreateAppointmentCommand(contract.PatientName, contract.Identification, contract.DateSelected);
@@ -36,6 +37,7 @@ namespace Net.Clinic.API.Controllers
         }
 
         [HttpDelete]
+        [Route("delete")]
         public async Task<IActionResult> DeleteAppointment([FromBody] DeleteAppointmentContract contract)
         {
             var command = new DeleteAppointmentCommand(contract.AppointmentId);
@@ -51,6 +53,7 @@ namespace Net.Clinic.API.Controllers
         }
 
         [HttpPatch]
+        [Route("update")]
         public async Task<IActionResult> UpdateAppointmentAssist([FromBody] UpdateAppointmentAssistContract contract)
         {
             var command = new UpdateAppointmentAssistCommand(contract.AppointmentId);
@@ -66,6 +69,7 @@ namespace Net.Clinic.API.Controllers
         }
 
         [HttpPost]
+        [Route("fetchdate")]
         public async Task<IActionResult> FetchAppointmentsByCurrentDate([FromBody] FetchAppointmentByCurrentDateContract contract)
         {
             var query = new FetchCurrentDateAppointmentQuery(contract.CurrentDate);
